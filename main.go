@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"time"
 	"strings"
+	"time"
+
+	_ "modernc.org/sqlite"
 )
 
 func main() {
@@ -20,10 +22,9 @@ func main() {
 
 	sites := []string{}
 
-
 	sites = strings.Fields(string(content))
 
-	for i:=0; i<len(sites);i++ {
+	for i := 0; i < len(sites); i++ {
 		start := time.Now()
 		resp, err := http.Get(sites[i])
 		if err != nil {
@@ -32,6 +33,6 @@ func main() {
 		}
 		defer resp.Body.Close()
 
-		fmt.Println(sites[i] , resp.Status, time.Since(start))
+		fmt.Println(sites[i], resp.Status, time.Since(start))
 	}
 }
